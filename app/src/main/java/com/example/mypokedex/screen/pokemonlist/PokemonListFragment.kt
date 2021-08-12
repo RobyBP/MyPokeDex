@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypokedex.R
 import com.example.mypokedex.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PokemonListFragment(): BaseFragment() {
@@ -21,7 +25,13 @@ class PokemonListFragment(): BaseFragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter = PokemonListAdapter { }
         recyclerView.adapter = adapter
-        adapter.submitList(listOf())
 
+        GlobalScope.launch(Dispatchers.Main) {
+
+            model.pokemonList.collect {
+                adapter.submitList(it)
+            }
+
+        }
     }
 }

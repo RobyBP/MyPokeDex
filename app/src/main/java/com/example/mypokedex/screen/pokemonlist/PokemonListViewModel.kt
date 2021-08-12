@@ -20,7 +20,11 @@ class PokemonListViewModel @Inject constructor(
     var isLoading = MutableStateFlow(false)
     var endReached = MutableStateFlow(false)
 
-    fun loadPokemonPaginated() {
+    init {
+        loadPokemonPaginated()
+    }
+
+    private fun loadPokemonPaginated() {
         isLoading.value = true
         runCommand {
             when(val result = repository.getPokemonList(PAGE_SIZE, currentPage + PAGE_SIZE)) {

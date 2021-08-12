@@ -8,6 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:id="@+id/pokemon_card_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         tools:src="@drawable/ic_trainer"
