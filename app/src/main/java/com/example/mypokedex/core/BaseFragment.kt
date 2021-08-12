@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
-abstract class BaseFragment(private val layoutId: Int): Fragment() {
+abstract class BaseFragment: Fragment() {
 
     protected abstract val model: BaseViewModel
     private var navController: NavController? = null
+    abstract val layoutId: Int
 
-    override fun onCreateView(
+    final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,8 +22,11 @@ abstract class BaseFragment(private val layoutId: Int): Fragment() {
         return inflater.inflate(layoutId, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initialiseViews(view)
         navController = Navigation.findNavController(view)
     }
+
+    abstract fun initialiseViews(view: View)
 }
