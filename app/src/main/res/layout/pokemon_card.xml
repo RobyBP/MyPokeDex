@@ -15,4 +15,11 @@
         android:layout_gravity="center"
         tools:src="@drawable/ic_trainer" />
 
+    <ProgressBar
+        android:id="@+id/pokemon_card_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+
 </androidx.cardview.widget.CardView>

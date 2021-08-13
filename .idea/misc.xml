@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dejan/StudioProjects/MyPokeDex/app/src/main/res/drawable/loading_animation.xml" value="0.290625" />
         <entry key="..\:/Users/dejan/StudioProjects/MyPokeDex/app/src/main/res/layout/fragment_pokemon_list.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/dejan/StudioProjects/MyPokeDex/app/src/main/res/layout/loading_screen.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/dejan/StudioProjects/MyPokeDex/app/src/main/res/layout/pokemon_card.xml" value="0.1598731884057971" />
       </map>
     </option>
