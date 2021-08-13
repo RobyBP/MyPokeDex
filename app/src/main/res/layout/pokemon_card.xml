@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="4dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="#ffffff"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:cardCornerRadius="4dp">
 
     <ImageView
         android:id="@+id/pokemon_card_image"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        tools:src="@drawable/ic_trainer"
-        />
+        android:layout_gravity="center"
+        tools:src="@drawable/ic_trainer" />
+
+    <ProgressBar
+        android:id="@+id/pokemon_card_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
 
 </androidx.cardview.widget.CardView>

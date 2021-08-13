@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypokedex.R
 import com.example.mypokedex.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PokemonListFragment(): BaseFragment() {
+class PokemonListFragment : BaseFragment() {
 
     override val model: PokemonListViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
@@ -26,7 +25,7 @@ class PokemonListFragment(): BaseFragment() {
         val adapter = PokemonListAdapter { }
         recyclerView.adapter = adapter
 
-        GlobalScope.launch(Dispatchers.Main) {
+        MainScope().launch {
 
             model.pokemonList.collect {
                 adapter.submitList(it)
