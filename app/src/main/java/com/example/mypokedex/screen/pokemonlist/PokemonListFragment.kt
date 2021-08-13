@@ -9,6 +9,7 @@ import com.example.mypokedex.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -23,10 +24,10 @@ class PokemonListFragment(): BaseFragment() {
     override fun initialiseViews(view: View) {
         recyclerView = view.findViewById(R.id.pokemon_list_recyclerview)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        val adapter = PokemonListAdapter { }
+        val adapter = PokemonListAdapter(requireContext()) { }
         recyclerView.adapter = adapter
 
-        GlobalScope.launch(Dispatchers.Main) {
+        MainScope().launch() {
 
             model.pokemonList.collect {
                 adapter.submitList(it)
