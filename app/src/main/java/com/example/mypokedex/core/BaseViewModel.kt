@@ -40,4 +40,9 @@ open class BaseViewModel : ViewModel() {
             }
 
         }
+
+    override fun onCleared() {
+        job.cancelChildren()
+    }
+
 }
