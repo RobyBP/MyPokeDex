@@ -24,22 +24,23 @@ class PokemonListViewModel @Inject constructor(
         loadPokemonPaginated()
     }
 
-    private fun loadPokemonPaginated() {
+    fun loadPokemonPaginated() {
         isLoading.value = true
         runCommand {
-            when(val result = repository.getPokemonList(PAGE_SIZE, currentPage + PAGE_SIZE)) {
+            when (val result = repository.getPokemonList(PAGE_SIZE, currentPage + PAGE_SIZE)) {
                 is NetworkViewState.Success -> {
                     endReached.value = currentPage * PAGE_SIZE >= result.data!!.count
                     val pokedexEntries = result.data.results.mapIndexed { index, entry ->
-                        val number = if(entry.url.endsWith("/")) {
+                        val number = if (entry.url.endsWith("/")) {
                             entry.url.dropLast(1).takeLastWhile { it.isDigit() }
                         } else {
                             entry.url.takeLastWhile { it.isDigit() }
                         }
-                        val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
+                        val url =
+                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
                         PokedexListEntry(entry.name, url, index)
                     }
-                    currentPage++
+                    currentPage += PAGE_SIZE
                     error.value = ""
                     isLoading.value = false
                     pokemonList.value += pokedexEntries
@@ -51,4 +52,5 @@ class PokemonListViewModel @Inject constructor(
             }
         }
     }
+
 }

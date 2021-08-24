@@ -2,14 +2,13 @@ package com.example.mypokedex.screen.pokemonlist
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypokedex.R
 import com.example.mypokedex.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PokemonListFragment : BaseFragment() {
@@ -25,12 +24,17 @@ class PokemonListFragment : BaseFragment() {
         val adapter = PokemonListAdapter { }
         recyclerView.adapter = adapter
 
-        MainScope().launch {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) model.loadPokemonPaginated()
+            }
+        })
 
+        lifecycleScope.launchWhenStarted {
             model.pokemonList.collect {
                 adapter.submitList(it)
             }
-
         }
     }
 }
