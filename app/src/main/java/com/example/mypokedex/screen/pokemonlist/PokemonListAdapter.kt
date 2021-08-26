@@ -1,21 +1,16 @@
 package com.example.mypokedex.screen.pokemonlist
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.bitmap.BitmapPool
 import coil.load
 import coil.request.ImageRequest
 import coil.request.ImageResult
-import coil.size.Size
-import coil.transform.Transformation
 import com.example.mypokedex.R
 import com.example.mypokedex.data.PokedexListEntry
 
@@ -41,20 +36,6 @@ class PokemonListAdapter(private val onClick: () -> Unit) :
                     super.onSuccess(request, metadata)
                     holder.loadingAnimation.visibility = View.GONE
                 }
-            })
-
-            transformations(object: Transformation {
-                override fun key(): String = "paletteTransformer"
-                override suspend fun transform(
-                    pool: BitmapPool,
-                    input: Bitmap,
-                    size: Size
-                ): Bitmap {
-                    val palette = Palette.from(input).generate()
-                    holder.pokemonImage.setBackgroundColor(palette.getDominantColor(0xFFFFFF))
-                    return input
-                }
-
             })
         }
 
