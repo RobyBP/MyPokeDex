@@ -2,7 +2,9 @@ package com.example.mypokedex.screen.pokemonlist
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypokedex.R
@@ -32,8 +34,10 @@ class PokemonListFragment : BaseFragment() {
         })
 
         lifecycleScope.launchWhenStarted {
-            model.pokemonList.collect {
-                adapter.submitList(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.pokemonList.collect {
+                    adapter.submitList(it)
+                }
             }
         }
     }
