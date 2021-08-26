@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 abstract class BaseFragment: Fragment() {
 
     protected abstract val model: BaseViewModel
-    private var navController: NavController? = null
+    private lateinit var navController: NavController
     abstract val layoutId: Int
 
     final override fun onCreateView(
@@ -24,8 +24,8 @@ abstract class BaseFragment: Fragment() {
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initialiseViews(view)
         navController = Navigation.findNavController(view)
+        initialiseViews(view)
     }
 
     abstract fun initialiseViews(view: View)
