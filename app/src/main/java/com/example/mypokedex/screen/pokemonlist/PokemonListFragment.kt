@@ -9,20 +9,24 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypokedex.R
 import com.example.mypokedex.core.BaseFragment
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class PokemonListFragment : BaseFragment() {
 
     override val model: PokemonListViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: CircularProgressIndicator
 
     override val layoutId: Int = R.layout.fragment_pokemon_list
 
     override fun initialiseViews(view: View) {
         recyclerView = view.findViewById(R.id.pokemon_list_recyclerview)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        progressBar = view.findViewById(R.id.pokemon_list_progress_bar)
         val adapter = PokemonListAdapter { }
         recyclerView.adapter = adapter
 
@@ -34,9 +38,16 @@ class PokemonListFragment : BaseFragment() {
         })
 
         lifecycleScope.launchWhenStarted {
+
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                model.pokemonList.collect {
-                    adapter.submitList(it)
+
+                model.isLoading.collectLatest { isLoading ->
+                    if (!isLoading) {
+                        progressBar.visibility = View.GONE
+                        model.pokemonList.collect {
+                            adapter.submitList(it)
+                        }
+                    }
                 }
             }
         }
