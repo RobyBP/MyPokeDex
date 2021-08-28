@@ -1,17 +1,28 @@
 package com.example.mypokedex.screen.pokemonlist
 
+import android.content.Context
+import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.viewModelScope
+import androidx.palette.graphics.Palette
+import coil.ImageLoader
+import coil.request.ImageRequest
 import com.example.mypokedex.core.BaseViewModel
 import com.example.mypokedex.data.PokedexListEntry
 import com.example.mypokedex.database.PokemonRepository
 import com.example.mypokedex.util.Constants.PAGE_SIZE
 import com.example.mypokedex.util.NetworkViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
-    private val repository: PokemonRepository
+    private val repository: PokemonRepository,
+    private val imageLoader: ImageLoader,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel() {
 
     private var currentPage = 0
@@ -26,7 +37,7 @@ class PokemonListViewModel @Inject constructor(
 
     fun loadPokemonPaginated() {
         isLoading.value = true
-        runCommand {
+        viewModelScope.launch {
             when (val result = repository.getPokemonList(PAGE_SIZE, currentPage + PAGE_SIZE)) {
                 is NetworkViewState.Success -> {
                     endReached.value = currentPage * PAGE_SIZE >= result.data!!.count
@@ -38,7 +49,22 @@ class PokemonListViewModel @Inject constructor(
                         }
                         val url =
                             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                        PokedexListEntry(entry.name, url, index)
+
+                        var dominantColor = 0x000000
+
+                        val request = ImageRequest.Builder(context)
+                            .data(url)
+                            .allowHardware(false) // Disable hardware bitmaps.
+                            .build()
+                        val drawable = (imageLoader.execute(request)).drawable
+
+                        val palette = async {
+                            Palette.Builder(drawable!!.toBitmap()).generate()
+                        }
+
+                        dominantColor = palette.await().dominantSwatch?.rgb ?: 0x000000
+
+                        PokedexListEntry(entry.name, url, index, dominantColor)
                     }
                     currentPage += PAGE_SIZE
                     error.value = ""
@@ -52,5 +78,4 @@ class PokemonListViewModel @Inject constructor(
             }
         }
     }
-
 }
