@@ -33,7 +33,7 @@ class PokemonListFragment : BaseFragment() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) model.loadPokemonPaginated()
+                if (!recyclerView.canScrollVertically(1) && !model.isLoading.value) model.loadPokemonPaginated()
             }
         })
 
@@ -47,7 +47,7 @@ class PokemonListFragment : BaseFragment() {
                         model.pokemonList.collect {
                             adapter.submitList(it)
                         }
-                    }
+                    } else progressBar.visibility = View.VISIBLE
                 }
             }
         }
