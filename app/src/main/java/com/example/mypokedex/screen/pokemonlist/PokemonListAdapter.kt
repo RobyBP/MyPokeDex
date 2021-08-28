@@ -1,5 +1,6 @@
 package com.example.mypokedex.screen.pokemonlist
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +19,10 @@ class PokemonListAdapter(private val onClick: () -> Unit) :
     ListAdapter<PokedexListEntry, PokemonListAdapter.PokemonListViewHolder>(PokemonCallback) {
 
     class PokemonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val pokemonImage: ImageView = itemView.findViewById(R.id.pokemon_card_image)
         val loadingAnimation: ProgressBar = itemView.findViewById(R.id.pokemon_card_progress_bar)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonListViewHolder {
@@ -31,17 +34,18 @@ class PokemonListAdapter(private val onClick: () -> Unit) :
     override fun onBindViewHolder(holder: PokemonListViewHolder, position: Int) {
 
         holder.pokemonImage.load(getItem(position).imageUrl) {
-            listener(object: ImageRequest.Listener {
+            listener(object : ImageRequest.Listener {
                 override fun onSuccess(request: ImageRequest, metadata: ImageResult.Metadata) {
                     super.onSuccess(request, metadata)
                     holder.loadingAnimation.visibility = View.GONE
                 }
             })
+
         }
 
-        holder.pokemonImage.setOnClickListener {
-            onClick()
-        }
+        val hexColor = "#%06x".format(getItem(position).dominantColor)
+
+        holder.pokemonImage.setBackgroundColor(Color.parseColor(hexColor))
     }
 
 }
