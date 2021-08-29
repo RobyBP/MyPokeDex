@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pokemon_detail_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:ignore="ContentDescription,Autofill,LabelFor">
+
+    <ImageView
+        android:id="@+id/pokemon_detail_sprite"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="15dp"
+        android:translationZ="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_trainer" />
+
+    <TextView
+        android:id="@+id/pokemon_detail_name_and_number"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-15dp"
+        android:text="@string/pokemon_detail_name_and_number"
+        android:textColor="#000000"
+        android:translationZ="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_sprite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_pokemon_detail_surface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_sprite">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pokemon_detail_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/pokemon_detail_loading_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/pokemon_detail_divider"
+                android:layout_width="2dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="80dp"
+                android:background="#BCBCBC"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/pokemon_detail_weight_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_weight"
+                app:layout_constraintEnd_toEndOf="@id/pokemon_detail_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/pokemon_detail_divider" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/pokemon_weight"
+                android:textColor="#222222"
+                app:layout_constraintEnd_toEndOf="@id/pokemon_detail_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_weight_icon" />
+
+            <ImageView
+                android:id="@+id/pokemon_detail_height_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/pokemon_detail_divider"
+                app:layout_constraintTop_toTopOf="@id/pokemon_detail_divider" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/pokemon_height"
+                android:textColor="#222222"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/pokemon_detail_divider"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_height_icon" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_two_type_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_detail_divider">
+
+                <EditText
+                    android:id="@+id/pokemon_detail_first_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_pokemon_type_bg"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/pokemon_detail_second_type"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:backgroundTint="#AAF692F6"
+                    tools:text="psychic" />
+
+                <EditText
+                    android:id="@+id/pokemon_detail_second_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_pokemon_type_bg"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/pokemon_detail_first_type"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:backgroundTint="#222222"
+                    tools:text="poison" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/pokemon_detail_one_type_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_pokemon_type_bg"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBaseline_toBottomOf="@id/pokemon_detail_two_type_card"
+                app:layout_constraintEnd_toEndOf="@id/pokemon_detail_height"
+                app:layout_constraintStart_toStartOf="@+id/pokemon_detail_weight"
+                tools:backgroundTint="#222222"
+                tools:text="poison" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_health"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#FF0000"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_one_type_card"
+                app:trackCornerRadius="10dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_attack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#F08030"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_health"
+                app:trackCornerRadius="10dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_defense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#F8D030"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_attack"
+                app:trackCornerRadius="10dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_special_attack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#6890F0"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_defense"
+                app:trackCornerRadius="10dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_special_defense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#78C850"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_special_attack"
+                app:trackCornerRadius="10dp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/pokemon_detail_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:indeterminate="false"
+                android:max="255"
+                app:indicatorColor="#F85888"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_special_defense"
+                app:trackCornerRadius="10dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
