@@ -15,7 +15,7 @@ import coil.request.ImageResult
 import com.example.mypokedex.R
 import com.example.mypokedex.data.PokedexListEntry
 
-class PokemonListAdapter(private val onClick: () -> Unit) :
+class PokemonListAdapter(private val onClick: (PokedexListEntry) -> Unit) :
     ListAdapter<PokedexListEntry, PokemonListAdapter.PokemonListViewHolder>(PokemonCallback) {
 
     class PokemonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,9 +43,11 @@ class PokemonListAdapter(private val onClick: () -> Unit) :
 
         }
 
-        val hexColor = "#%06x".format(getItem(position).dominantColor)
+        holder.pokemonImage.setBackgroundColor(Color.parseColor(getItem(position).dominantColorHex))
 
-        holder.pokemonImage.setBackgroundColor(Color.parseColor(hexColor))
+        holder.itemView.setOnClickListener {
+            onClick(getItem(position))
+        }
     }
 
 }
