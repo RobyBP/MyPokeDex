@@ -29,7 +29,6 @@ class PokemonListViewModel @Inject constructor(
     var pokemonList = MutableStateFlow<List<PokedexListEntry>>(listOf())
     var error = MutableStateFlow("")
     var isLoading = MutableStateFlow(false)
-    var endReached = MutableStateFlow(false)
 
     init {
         loadPokemonPaginated()
@@ -38,10 +37,9 @@ class PokemonListViewModel @Inject constructor(
     fun loadPokemonPaginated() {
         isLoading.value = true
         viewModelScope.launch {
-            when (val result = repository.getPokemonList(PAGE_SIZE, currentPage + PAGE_SIZE)) {
+            when (val result = repository.getPokemonList(PAGE_SIZE, currentPage)) {
                 is NetworkViewState.Success -> {
-                    endReached.value = currentPage * PAGE_SIZE >= result.data!!.count
-                    val pokedexEntries = result.data.results.mapIndexed { index, entry ->
+                    val pokedexEntries = result.data!!.results.mapIndexed { index, entry ->
                         val number = if (entry.url.endsWith("/")) {
                             entry.url.dropLast(1).takeLastWhile { it.isDigit() }
                         } else {
@@ -50,7 +48,7 @@ class PokemonListViewModel @Inject constructor(
                         val url =
                             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
 
-                        var dominantColor = 0x000000
+                        var dominantColor: Int
 
                         val request = ImageRequest.Builder(context)
                             .data(url)
@@ -64,7 +62,9 @@ class PokemonListViewModel @Inject constructor(
 
                         dominantColor = palette.await().dominantSwatch?.rgb ?: 0x000000
 
-                        PokedexListEntry(entry.name, url, index, dominantColor)
+                        val hex = "#%06x".format(dominantColor)
+
+                        PokedexListEntry(entry.name, url, hex)
                     }
                     currentPage += PAGE_SIZE
                     error.value = ""
