@@ -3,4 +3,7 @@
     <string name="profile">Profile</string>
     <string name="home">Home</string>
     <string name="list">List</string>
+    <string name="pokemon_detail_name_and_number">#%d %s</string>
+    <string name="pokemon_weight">%d lbs</string>
+    <string name="pokemon_height">%d ft</string>
 </resources>
