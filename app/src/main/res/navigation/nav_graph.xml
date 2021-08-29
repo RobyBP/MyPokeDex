@@ -11,10 +11,18 @@
     <fragment
         android:id="@+id/pokemonListFragment"
         android:name="com.example.mypokedex.screen.pokemonlist.PokemonListFragment"
-        android:label="PokemonListFragment" />
+        android:label="PokemonListFragment" >
+        <action
+            android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"
+            app:destination="@id/pokemonDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/trainerProfileFragment"
         android:name="com.example.mypokedex.screen.trainerprofile.TrainerProfileFragment"
         android:label="TrainerProfileFragment" />
+    <fragment
+        android:id="@+id/pokemonDetailFragment"
+        android:name="com.example.mypokedex.screen.pokemondetail.PokemonDetailFragment"
+        android:label="PokemonDetailFragment" />
 
 </navigation>
